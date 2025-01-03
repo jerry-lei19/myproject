@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+    <div class="search-cont">
+    <div class="search">
+        <input type="search" class="searching" placeholder="search location">
+       
+        <img src="img/search.png"class="search-img" alt="btn">
+    </div>
+</div>
+    <div class="temp">
+        <div><img class="images" src="img/rainy.jpeg"alt="check the weather?"></div>
+        <div class="deg"></div>
+        <div class="temp-text"></div>
+         </div>
+    <div class="wind">
+        <div class="left">
+            <img src="img/wind.png" height="20"alt="wind">
+            <div class="windy">68</div>    
+        </div>
+        <div class="right">
+            <img src="img/humidity.png" height="20"alt="humidity">
+            <div class="humid">1100</div>
+        </div>
+    </div>
+</div>
+<script>
+    var searchbtn=document.querySelector(".search-img");
+    var search=document.querySelector(".searching")
+    var icon=document.querySelector(".images")
+    function makeRequest(url){
+    var xhr=new XMLHttpRequest();
+    xhr.open("GET",url);
+    xhr.send();
+    xhr.onload=function(){
+        if(xhr.status===200){
+        var data=JSON.parse(xhr.responseText);
+        document.querySelector(".deg").innerHTML=Math.round(data.main.temp)+"°C";
+        if(data.weather[0].main=="Clear"){
+            icon.src="img/sunny.jpg";
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.body.style.backgroundImage="url('img/sunny.jpg')";
+            document.body.style.backgroundRepeat="no-repeat";
+            document.body.style.backgroundSize="cover";
+            document.body.style.backgroundPosition="center"
+          
+        }
+        else if(data.weather[0].main=="Rain"){
+            icon.src="img/rainy.jpeg";
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.body.style.backgroundImage="url('img/rainy.jpeg')";
+            document.body.style.backgroundRepeat="no-repeat";
+            document.body.style.backgroundSize="cover";
+            document.body.style.backgroundPosition="center"
+          
+        }
+        else if(data.weather[0].main=="Clouds"){
+            icon.src="img/cloudy.jpeg";
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.body.style.backgroundImage="url('img/cloudy.jpeg')";
+            document.body.style.backgroundRepeat="no-repeat";
+            document.body.style.backgroundSize="cover";
+            document.body.style.backgroundPosition="center"
+          
+        }
+        else if(data.weather[0].main=="Mist"){
+            icon.src="img/misty.jpeg";
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.body.style.backgroundImage="url('img/misty.jpeg')";
+            document.body.style.backgroundRepeat="no-repeat";
+            document.body.style.backgroundSize="cover";
+            document.body.style.backgroundPosition="center"
+             
+        }
+        else if(data.weather[0].main=="Snow"){
+            icon.src="img/snoww.jpeg";
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.body.style.backgroundImage="url('img/snoww.jpeg')";
+            document.body.style.backgroundRepeat="no-repeat";
+            document.body.style.backgroundSize="cover";
+            document.body.style.backgroundPosition="center"
+          
+        }
+        else if(data.weather[0].main=="Drizzle"){
+            icon.src="img/drizzling.jpeg";
+            document.querySelector(".temp-text").innerHTML=data.weather[0].main;
+            document.body.style.backgroundImage="url('img/drizzling.jpeg')";
+            document.body.style.backgroundRepeat="no-repeat";
+            document.body.style.backgroundSize="cover";
+            document.body.style.backgroundPosition="center"
+          
+        }
+        document.querySelector(".windy").innerHTML=data.wind.speed+" m/s";
+        document.querySelector(".humid").innerHTML=data.main.humidity+"%";
+        }
+        else{
+            console.log("error");
+        }
+    }
+    
+
+    }
+    
+    
+    searchbtn.addEventListener("click",function(){
+        makeRequest(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${search.value}&appid=bc3ab0c23bab7f687452c00d85c39372`);
+    })
+    addEventListener("keydown",function(){
+        if(event.key==="Enter"){
+            makeRequest(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${search.value}&appid=bc3ab0c23bab7f687452c00d85c39372`)
+        }
+    })
+    
+    
+    </script>
+</body>
+</html>
